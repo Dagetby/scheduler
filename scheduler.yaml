@@ -1,0 +1,128 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: RDE
+paths:
+  /schedulers/students/all:
+    get:
+      tags:
+        - Students
+      responses:
+        '200':
+          description: Return list all students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Students"
+
+  /schedulers/students/{id}:
+    get:
+      tags:
+        - Students
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Return student by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Students"
+        '404':
+          description: Not found stundet by id
+
+  /schedulers/group/{name}:
+    get:
+      tags:
+        - Group
+      parameters:
+        - in: path
+          name: name
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Return group by name
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+
+  /schedulers/teacher/{id}:
+    get:
+      tags:
+        - Teacher
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Return teacehr by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Teacher"
+
+components:
+  schemas:
+    Students:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        course:
+          type: integer
+        groupNumber:
+          type: string
+
+    Subject:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        students:
+          type: array
+          items:
+            $ref: "#/components/schemas/Students"
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"

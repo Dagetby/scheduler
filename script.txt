@@ -1,0 +1,111 @@
+
+CREATE TABLE public.students (
+	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+	first_name varchar NOT NULL,
+	last_name varchar NOT NULL,
+	age int NOT NULL,
+	course int NOT NULL,
+	group_id NOT NULL,
+	academic_perfomance int NOT NULL,
+	CONSTRAINT students_pk PRIMARY KEY (id)
+);
+ALTER TABLE public.students ADD CONSTRAINT schedule_fk FOREIGN KEY (group_id) REFERENCES public.group(id);
+
+CREATE TABLE public.schedule (
+	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+	group_id int NOT NULL,
+	teacher_id int NOT NULL,
+	subject_id int NOT NULL,
+	audience_id int not null, 
+	start_date date not null,
+	start_time time NOT NULL,
+	CONSTRAINT schedule_pk PRIMARY KEY (id)
+);
+ALTER TABLE public.schedule ADD CONSTRAINT schedule_fk FOREIGN KEY (audience_id) REFERENCES public.audience(id);
+ALTER TABLE public.schedule ADD CONSTRAINT schedule_fk1 FOREIGN KEY (group_id) REFERENCES public.group(id);
+ALTER TABLE public.schedule ADD CONSTRAINT schedule_fk2 FOREIGN KEY (teacher_id) REFERENCES public.teacher(id);
+ALTER TABLE public.schedule ADD CONSTRAINT schedule_fk3 FOREIGN KEY (subject_id) REFERENCES public.subject(id);
+
+CREATE TABLE public.group (
+	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+	name varchar NOT NULL,
+	number_of_people int NOT NULL,
+	CONSTRAINT group_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE public.teacher (
+	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+	first_name varchar NOT NULL,
+	last_name varchar NOT NULL,
+	subject_id int NOT NULL,
+	post varchar NOT NULL,
+	CONSTRAINT teacher_pk PRIMARY KEY (id)
+);
+ALTER TABLE public.teacher ADD CONSTRAINT teacher FOREIGN KEY (subject_id) REFERENCES public.subject(id);
+
+CREATE TABLE public.audience (
+	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+	name varchar NOT NULL,
+	adress varchar NOT NULL,
+	body_building varchar NOT NULL,
+	floor int not null, 
+	CONSTRAINT audience_pk PRIMARY KEY (id)
+);
+CREATE TABLE public.subject (
+	id int NOT NULL GENERATED ALWAYS AS IDENTITY,
+	name varchar NOT NULL,
+	CONSTRAINT subject_pk PRIMARY KEY (id)
+);
+
+
+
+INSERT INTO public.audience ("name",adress,body_building,floor)
+	VALUES 
+	('303','г. Москва, Вадковский переулок','1',3), 
+	('401','г. Москва, Вадковский переулок','1',4),
+	('0308','г. Москва, Вадковский переулок','2',3)
+	('0208','г. Москва, Вадковский переулок','2',2), 
+	('0209','г. Москва, Вадковский переулок','2',2),
+	('0811','г. Москва, Вадковский переулок','2',8),
+	('0310','г. Москва, Вадковский переулок','2',3), 
+	('305б','г. Москва, Вадковский переулок','1',3),
+	('203','г. Москва, Вадковский переулок','1',2);
+
+INSERT INTO public.students (first_name,last_name,age,course,academic_perfomance,group_id)
+	VALUES 
+	('Вера','Рязанкина',21,4,41,1),
+	('Тигран','Мирзаханян',21,4,38,1),
+	('Никита','Шакиров',21,4,43,1),
+	('Владислав','Кудрявцев',21,4,35,1),
+	('Никита','Сверчков',21,4,40,4),
+	('Паша','Гораев',20,3,30,5),
+	('Никита','Коробин',21,4,37,2),
+	('Андрей','Чуркин',21,4,42,2),
+	('Соня','Киоси',21,4,42,4),
+	('Петр','Астафьев',21,4,42,3);
+
+INSERT INTO public."group" ("name",number_of_people)
+	VALUES ('ИДБ-16-11',18),
+	('ИДБ-16-12',17),
+	('ИДБ-16-13',9),
+	('ИДБ-16-14',20),
+	('ИДБ-15-08',25),
+	('ИДБ-15-09',24),
+	('ИДБ-15-10',23);
+
+INSERT INTO public.subject ("name")
+	VALUES ('Безопанстность жизнедеятельности'),
+	('Компьютерная микроскопия'),
+	('Основы проектирования приборов и систем'),
+	('Прикладная метрология'),
+	('Начертательная геометрия'),
+	('Материаловедение'),
+	('Технология разработки приборов и систем');
+
+-- Auto-generated SQL script #202004151841
+INSERT INTO public.teacher (first_name,last_name,subject_id,post)
+	VALUES ('Алексей','Веленинович',8,'Зав.кафедры');
+
+-- Auto-generated SQL script #202004151842
+INSERT INTO public.schedule (group_id,teacher_id,subject_id,audience_id,start_date,start_time)
+	VALUES (1,1,8,2,'27.09.2021','10:20');
