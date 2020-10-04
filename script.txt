@@ -102,10 +102,8 @@ INSERT INTO public.subject ("name")
 	('Материаловедение'),
 	('Технология разработки приборов и систем');
 
--- Auto-generated SQL script #202004151841
 INSERT INTO public.teacher (first_name,last_name,subject_id,post)
 	VALUES ('Алексей','Веленинович',8,'Зав.кафедры');
 
--- Auto-generated SQL script #202004151842
 INSERT INTO public.schedule (group_id,teacher_id,subject_id,audience_id,start_date,start_time)
 	VALUES (1,1,8,2,'27.09.2021','10:20');
